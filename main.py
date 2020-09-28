@@ -4,6 +4,9 @@ import re
 
 app = Flask(__name__)
 
+# Change this to your secret key (can be anything, it's for extra protection)
+app.secret_key = 'canada$God7972#'
+
 # Enter your database connection details below
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'root'
