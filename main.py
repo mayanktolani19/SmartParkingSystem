@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flaskext.mysql import MySQL
-import re
+from datetime import datetime
+import requests, json, re, bcrypt
 
 app = Flask(__name__)
 
@@ -24,15 +25,36 @@ mysql.init_app(app)
 
 #Dashboard
 @app.route('/dashboard')
-def home():
+def dashboard():
     # Check if user is loggedin
     if 'loggedin' in session:
         # User is loggedin show them the home page
         cursor = mysql.get_db().cursor()
         cursor.execute('SELECT * FROM users WHERE ID = %s', [session['id']])
         account = cursor.fetchone()
-        return render_template('dashboard.html', account = account)
-    # User is not loggedin redirect to login page
+        url = "https://thingspeak.com/channels/1163641/field/1.json"
+        try:
+            response = requests.get(url)
+            data = json.loads(response.text)
+            record = data['feeds'][-1]['field1']
+            if record is None:
+                record = 0
+        except:
+            record = 0
+        slots = int(record)
+        lastupdated_nonformatted = datetime.now()
+        # dd/mm/YY H:M:S
+        lastupdated = lastupdated_nonformatted.strftime("%d/%m/%Y %H:%M:%S")
+        booked_slots = []
+        empty_slots = []
+        # print(f"slots are {slots}")
+        for i in range(0,slots):
+            empty_slots.append(i+1)
+        # print(booked_slots)
+        for i in range(slots,10):
+            booked_slots.append(i+1)
+        # print(empty_slots)
+        return render_template('dashboard.html', username = session['username'], booked_slots = booked_slots, empty_slots = empty_slots, lastupdated = lastupdated)
     return redirect(url_for('login'))
 
 #Login
@@ -50,14 +72,15 @@ def login():
         cursor.execute('SELECT * FROM users WHERE Username = %s', (username))
         # Fetch one record and return result
         account = cursor.fetchone()
+        # print(account)
         # Login successful 
-        print(account)
-        if(password==account[2]):
-        	session['loggedin'] = True
-        	session['id'] = account[0]
-        	session['username'] = account[1]
-        	return home()
+        if bcrypt.checkpw(password.encode('utf-8'), account[2].encode('utf-8')):
+            session['loggedin'] = True
+            session['id'] = account[0]
+            session['username'] = account[1]
+
             # Redirect to dashboard
+            return redirect(url_for('dashboard'))
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
@@ -75,7 +98,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-    # Check if account exists using MySQL
+        # Check if account exists using MySQL
         cursor = mysql.get_db().cursor()
         cursor.execute('SELECT * FROM users WHERE Username = %s', (username))
         account = cursor.fetchone()
@@ -88,16 +111,12 @@ def register():
             msg = 'Please fill out the form!'
         else:
             # Account doesnt exists and the form data is valid, now insert new account into users table
-            
-            # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (username, password))
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            cursor.execute('INSERT INTO users VALUES (NULL, %s, %s)', (username, hashed_password))
             msg = 'You have successfully registered!'
-    elif request.method == 'POST':
-        # Form is empty... (no POST data)
-        msg = 'Please fill out the form!'
-    # Show registration form with message (if any)
+            
     return render_template('login.html', msg=msg)
 
 #run the Flask Server
 if __name__ == '__main__':
-   app.run(debug=True)
+    app.run(debug=True)
