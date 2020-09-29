@@ -1,9 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" >
 <head>
-	<title>ParkMaster2000</title>
+  <meta charset="UTF-8">
+  <title>ParkFind | Smart Parking System</title>
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.1.0/css/all.css'>
+  <link rel="stylesheet" href="{{url_for('static',filename='css/styleDashboard.css')}}">
 </head>
 <body>
-Hi arpat, you may proceed
+<!-- partial:index.partial.html -->
+<div class="container">
+        <div class="main-text">
+            <h1>ParkFind</h1>
+            <p>Welcome <span class="lot-id">{{ username }}</span>!</p>
+        </div>
+        <main>
+            <div class="data-box">
+                <p class="m-para">Parking Status</p>
+                <p class="total-para">Total Slots:</p><span class="total-data">10</span>
+                <p class="avail-para">Available: </p><span class="avail-data">{{ 10-booked_slots|length }}</span>
+                <div class="location">
+                        <p>Your Location:</p><i class="fas fa-map-marker-alt"></i><p>Parking Space 1</p>
+                </div>
+                <div class="location">
+                        <p>Last Updated:</p><i class="fas fa-clock"></i><p>{{ lastupdated }}</p>
+                </div>
+                <p class="refresh"><a href="{{ url_for('dashboard') }}" class="button button1"><i class="fas fa-sync"></i> Refresh</a></p>
+            </div>
+            <div class="display-box">
+                {% if booked_slots|length == 0 %}
+                    {% for j in empty_slots %}
+                    <div class="lot-box">{{ j }}</div>
+                    {% endfor %}
+                {% else %}
+                    {% for i in empty_slots %}
+                    <div class="lot-box">{{ i }}</div>
+                    {% endfor %}
+                    {% for j in booked_slots %}
+                    <div class="lot-box inactive">{{ j }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </main>
+    </div>
+<!-- partial -->
+  
 </body>
 </html>
