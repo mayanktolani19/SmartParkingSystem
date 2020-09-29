@@ -19,9 +19,9 @@ mysql = MySQL(autocommit=True)
 mysql.init_app(app)
 
 #Homepage
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 #Dashboard
 @app.route('/dashboard')
