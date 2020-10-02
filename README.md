@@ -1,2 +1,1 @@
-# SmartParkingSystem
-Automated System
+# SmartParkingsystem
