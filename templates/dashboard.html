@@ -29,7 +29,7 @@
             <div class="display-box">
                 {% if booked_slots|length == 0 %}
                     {% for j in empty_slots %}
-                    <div class="lot-box">{{ j }}</div>
+                    <a href="{{ url_for('reservation') }}"><div class="lot-box">{{ j }}</div></a>
                     {% endfor %}
                 {% else %}
                     {% for i in empty_slots %}

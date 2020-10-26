@@ -57,6 +57,14 @@ def dashboard():
         return render_template('dashboard.html', username = session['username'], booked_slots = booked_slots, empty_slots = empty_slots, lastupdated = lastupdated)
     return redirect(url_for('login'))
 
+# Reservation System
+@app.route('/reservation/<id>')
+def reservation():
+    # Check if user is loggedin
+    if 'loggedin' in session:
+        return render_template('reservation.html', id = id)
+    return redirect(url_for('login'))
+
 #Login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
