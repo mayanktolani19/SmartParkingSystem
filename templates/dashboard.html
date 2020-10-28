@@ -19,17 +19,18 @@
                 <p class="total-para">Total Slots:</p><span class="total-data">10</span>
                 <p class="avail-para">Available: </p><span class="avail-data">{{ 10-booked_slots|length }}</span>
                 <div class="location">
-                        <p>Your Location:</p><i class="fas fa-map-marker-alt"></i><p>Parking Space 1</p>
+                        <p>Recommended Location:</p><i class="fas fa-map-marker-alt"></i><p>Parking Space: {{ parking_space }}, Distance: {{ distance }}</p>
+                        
                 </div>
                 <div class="location">
-                        <p>Last Updated:</p><i class="fas fa-clock"></i><p>{{ lastupdated }}</p>
+                        <p>Last Updated:</p><i class="fas fa-clock"></i><p>Timestamp: {{ lastupdated }}, Rate: &#x20B9; {{ rate }}/ hour</p>
                 </div>
-                <p class="refresh"><a href="{{ url_for('dashboard') }}" class="button button1"><i class="fas fa-sync"></i> Refresh</a></p>
+                <p class="refresh"><a href="{{ url_for('dashboard') }}" class="button button1"><i class="fas fa-sync"></i> Refresh</a><a href="{{ url_for('reservation') }}" class="button button1"><i class="fas fa-hand-holding-usd"></i> Reserve</a></p>
             </div>
             <div class="display-box">
                 {% if booked_slots|length == 0 %}
                     {% for j in empty_slots %}
-                    <a href="{{ url_for('reservation') }}"><div class="lot-box">{{ j }}</div></a>
+                    <div class="lot-box">{{ j }}</div>
                     {% endfor %}
                 {% else %}
                     {% for i in empty_slots %}

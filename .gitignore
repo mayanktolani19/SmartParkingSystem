@@ -1,0 +1,7 @@
+venv/
+.vscode/
+files/
+credential.txt
+sample.py
+firebase.json
+__pycache__
