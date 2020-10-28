@@ -45,9 +45,11 @@
      </thead>
     <tbody>
         {% for i in reservations %}
+        <tr>
         <td>{{ i["carMark"] }}</td>
         <td>{{ i["carNumber"] }}</td>
         <td>{{ i["parkingSpace"] }}</td>
+        </tr>
         {% endfor %}
     </tbody>
      </table>
