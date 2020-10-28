@@ -1,0 +1,19 @@
+Parking Space A: 
+Reservation: https://thingspeak.com/channels/1208319/
+Entry: https://thingspeak.com/channels/1208300
+Circuit: https://www.tinkercad.com/things/8qhIAhigUSS-park-1/editel?sharecode=3R9LO7w2xM4o9WDnhxQA0bUHKvVnO51VePkS7lfC3jc
+
+Parking Space B:
+Reservation: https://thingspeak.com/channels/1208532/
+Entry: https://thingspeak.com/channels/1208301
+Circuit: https://www.tinkercad.com/things/i1qlFvqW60g-copy-of-park-3/editel?sharecode=OucD28aHfnRWlsnFdpF1OHmB37Zi2AFwMEnvlZvQGfM
+
+Parking Space C:
+Reservation: https://thingspeak.com/channels/1208535/
+Entry: https://thingspeak.com/channels/1208302
+Circuit: https://www.tinkercad.com/things/6EJ09agBosl-copy-of-park-4/editel?sharecode=NuX0bdzasnPwpTca9eOoUgu07u6f_X48jfNMVlCoedQ
+
+Parking Space D:
+Reservation: https://thingspeak.com/channels/1202121/
+Entry: https://thingspeak.com/channels/1208303
+Circuit: https://www.tinkercad.com/things/3phfiexBVly-copy-of-lmn-j-component/editel?sharecode=-RyVLXrOqZ8tVas7fmAtK2eWfY-IjuQhfv3mpg8gpJg
